@@ -1,0 +1,51 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  folio_solicitud: MyText
+  nombre: MyText
+  cargo: MyText
+  ambito: MyText
+  auxiliar: MyText
+  zona_referencia: 1
+  id_auxiliar: 1
+  id_dispositivo: 1
+  folio_registro: MyText
+  fecha_captacion: 2020-12-07 12:39:17
+  fecha_recepcion: 2020-12-07 12:39:17
+  status: MyText
+  folio_duplicado: MyText
+  tipo_inconsistencia: MyText
+  entidad: 1
+  distrito: 1
+  municipio: 1
+  seccion: 1
+  distrito_local: 1
+  motivo_baja: MyText
+  fecha_revision_audiencia: MyText
+  codigo_integridad: MyText
+
+two:
+  id: 1
+  folio_solicitud: MyText
+  nombre: MyText
+  cargo: MyText
+  ambito: MyText
+  auxiliar: MyText
+  zona_referencia: 1
+  id_auxiliar: 1
+  id_dispositivo: 1
+  folio_registro: MyText
+  fecha_captacion: 2020-12-07 12:39:17
+  fecha_recepcion: 2020-12-07 12:39:17
+  status: MyText
+  folio_duplicado: MyText
+  tipo_inconsistencia: MyText
+  entidad: 1
+  distrito: 1
+  municipio: 1
+  seccion: 1
+  distrito_local: 1
+  motivo_baja: MyText
+  fecha_revision_audiencia: MyText
+  codigo_integridad: MyText

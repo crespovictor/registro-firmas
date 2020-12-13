@@ -1,0 +1,2 @@
+class Auxiliar < ApplicationRecord
+end

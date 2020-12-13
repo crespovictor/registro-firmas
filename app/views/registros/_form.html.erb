@@ -1,0 +1,132 @@
+<%= form_with(model: registro, local: true) do |form| %>
+  <% if registro.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(registro.errors.count, "error") %> prohibited this registro from being saved:</h2>
+
+      <ul>
+        <% registro.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :id %>
+    <%= form.number_field :id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :folio_solicitud %>
+    <%= form.text_area :folio_solicitud %>
+  </div>
+
+  <div class="field">
+    <%= form.label :nombre %>
+    <%= form.text_area :nombre %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cargo %>
+    <%= form.text_area :cargo %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ambito %>
+    <%= form.text_area :ambito %>
+  </div>
+
+  <div class="field">
+    <%= form.label :auxiliar %>
+    <%= form.text_area :auxiliar %>
+  </div>
+
+  <div class="field">
+    <%= form.label :zona_referencia %>
+    <%= form.number_field :zona_referencia %>
+  </div>
+
+  <div class="field">
+    <%= form.label :id_auxiliar %>
+    <%= form.number_field :id_auxiliar %>
+  </div>
+
+  <div class="field">
+    <%= form.label :id_dispositivo %>
+    <%= form.number_field :id_dispositivo %>
+  </div>
+
+  <div class="field">
+    <%= form.label :folio_registro %>
+    <%= form.text_area :folio_registro %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fecha_captacion %>
+    <%= form.datetime_select :fecha_captacion %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fecha_recepcion %>
+    <%= form.datetime_select :fecha_recepcion %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.text_area :status %>
+  </div>
+
+  <div class="field">
+    <%= form.label :folio_duplicado %>
+    <%= form.text_area :folio_duplicado %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tipo_inconsistencia %>
+    <%= form.text_area :tipo_inconsistencia %>
+  </div>
+
+  <div class="field">
+    <%= form.label :entidad %>
+    <%= form.number_field :entidad %>
+  </div>
+
+  <div class="field">
+    <%= form.label :distrito %>
+    <%= form.number_field :distrito %>
+  </div>
+
+  <div class="field">
+    <%= form.label :municipio %>
+    <%= form.number_field :municipio %>
+  </div>
+
+  <div class="field">
+    <%= form.label :seccion %>
+    <%= form.number_field :seccion %>
+  </div>
+
+  <div class="field">
+    <%= form.label :distrito_local %>
+    <%= form.number_field :distrito_local %>
+  </div>
+
+  <div class="field">
+    <%= form.label :motivo_baja %>
+    <%= form.text_area :motivo_baja %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fecha_revision_audiencia %>
+    <%= form.text_area :fecha_revision_audiencia %>
+  </div>
+
+  <div class="field">
+    <%= form.label :codigo_integridad %>
+    <%= form.text_area :codigo_integridad %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

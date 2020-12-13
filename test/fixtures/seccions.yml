@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  no_seccion: 1
+  lne: 1
+  firmas_requeridas: 1
+  distrito: 1
+  municipio: MyText
+  entidad: MyText
+
+two:
+  no_seccion: 1
+  lne: 1
+  firmas_requeridas: 1
+  distrito: 1
+  municipio: MyText
+  entidad: MyText
