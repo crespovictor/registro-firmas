@@ -34,13 +34,13 @@ ActiveAdmin.register Registro do
                 Registro.where(id: importer.values_at('id')).delete_all
             }
   #actions :all, except: [:destroy]
-  form do |f|
-    f.inputs do
-      f.input :seccion
-      f.input :ambito
-    end
-    actions
-  end
+  # form do |f|
+  #   f.inputs do
+  #     f.input :seccion
+  #     f.input :ambito
+  #   end
+  #   actions
+  # end
 
   scope :all, default: true
   scope :lista_nominal do |registros|
