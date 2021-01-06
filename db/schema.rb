@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_08_072214) do
+ActiveRecord::Schema.define(version: 2021_01_06_225614) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,16 +75,6 @@ ActiveRecord::Schema.define(version: 2020_12_08_072214) do
     t.index ["id"], name: "index_registros_on_id", unique: true
   end
 
-  create_table "secciones", force: :cascade do |t|
-    t.integer "seccion"
-    t.integer "municipio"
-    t.text "entidad"
-    t.integer "distrito"
-    t.integer "distrito_local"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "seccions", force: :cascade do |t|
     t.integer "no_seccion"
     t.integer "lne"
@@ -94,6 +84,11 @@ ActiveRecord::Schema.define(version: 2020_12_08_072214) do
     t.text "entidad"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "distrito_local"
+    t.integer "firmas_locales"
+    t.integer "firmas_actuales"
+    t.float "avance"
+    t.boolean "firmas_completas"
   end
 
 end

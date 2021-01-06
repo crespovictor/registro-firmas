@@ -1,24 +1,4 @@
-#ActiveAdmin.register Registro do
-
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
-  # permit_params :numero, :folio_solicitud, :nombre, :cargo, :ambito, :auxiliar, :zona_referencia, :id_auxiliar, :id_dispositivo, :folio_registro, :fecha_captacion, :fecha_recepcion, :status, :folio_duplicado, :tipo_inconsistencia, :entidad, :distrito, :municipio, :seccion, :distrito_local, :motivo_baja, :fecha_revision_audiencia, :codigo_integridad
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:numero, :folio_solicitud, :nombre, :cargo, :ambito, :auxiliar, :zona_referencia, :id_auxiliar, :id_dispositivo, :folio_registro, :fecha_captacion, :fecha_recepcion, :status, :folio_duplicado, :tipo_inconsistencia, :entidad, :distrito, :municipio, :seccion, :distrito_local, :motivo_baja, :fecha_revision_audiencia, :codigo_integridad]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
-  
-#end
 ActiveAdmin.register Registro do
-
-  #active_admin_import
 
   permit_params :numero, :folio_solicitud, :nombre, :cargo, :ambito, :auxiliar, :zona_referencia, :id_auxiliar, :id_dispositivo, :folio_registro, :fecha_captacion, :fecha_recepcion, :status, :folio_duplicado, :tipo_inconsistencia, :entidad, :distrito, :municipio, :seccion, :distrito_local, :motivo_baja, :fecha_revision_audiencia, :codigo_integridad
   
@@ -32,17 +12,21 @@ ActiveAdmin.register Registro do
             ),
             before_batch_import: ->(importer) {
                 Registro.where(id: importer.values_at('id')).delete_all
-            }
-  #actions :all, except: [:destroy]
-  # form do |f|
-  #   f.inputs do
-  #     f.input :seccion
-  #     f.input :ambito
-  #   end
-  #   actions
-  # end
+            },
+            after_import: -> (importer){
+              Seccion.all.each do |s|
+                s.firmas_actuales = Registro.where(seccion: s.no_seccion).where(status: "LISTA NOMINAL (PRELIMINARMENTE)").or(Registro.where(seccion: s.no_seccion).where(status: "PADRON ELECTORAL")).count
+                s.avance = ((Registro.where(seccion: s.no_seccion).where(status: "LISTA NOMINAL (PRELIMINARMENTE)").or(Registro.where(seccion: s.no_seccion).where(status: "PADRON ELECTORAL")).count / s.firmas_requeridas.to_f) * 100).round(2)
+                s.firmas_completas = ((Registro.where(seccion: s.no_seccion).where(status: "LISTA NOMINAL (PRELIMINARMENTE)").or(Registro.where(seccion: s.no_seccion).where(status: "PADRON ELECTORAL")).count / s.firmas_requeridas.to_f) * 100).round(2) >= 100
+                s.save
+              end}
+
+  actions :all, except: :destroy
 
   scope :all, default: true
+  scope :padron_electoral do |registros|
+    registros.where(:status => "PADRON ELECTORAL")
+  end
   scope :lista_nominal do |registros|
     registros.where(:status => "LISTA NOMINAL (PRELIMINARMENTE)")
   end
@@ -59,19 +43,6 @@ ActiveAdmin.register Registro do
     registros.where(:status => "FUERA AMBITO GEOGRAFICO")
   end
 
-  #action_item :only => :index do
-  #  link_to 'Upload CSV', :action => 'upload_csv'
-  #end
-#
-#  #collection_action :upload_csv do
-#  #  render "admin/csv/upload_csv"
-#  #end
-#
-#  #collection_action :import_csv, :method => :post do
-#  #  CsvDb.convert_save("registro", params[:dump][:file])
-#  #  redirect_to :action => :index, :notice => "CSV imported successfully!"
-  #end
-
 
   index do
 
@@ -85,6 +56,7 @@ ActiveAdmin.register Registro do
     column :seccion
     column :distrito_local
     column :distrito
+    actions
   end
 
   filter :auxiliar, as: :select

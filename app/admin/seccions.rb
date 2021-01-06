@@ -1,24 +1,16 @@
 ActiveAdmin.register Seccion do
-
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
-  permit_params :no_seccion, :lne, :firmas_requeridas, :distrito, :municipio, :entidad
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:no_seccion, :lne, :firmas_requeridas, :distrito, :municipio, :entidad]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
-  active_admin_import
+  permit_params :no_seccion, :lne, :firmas_requeridas, :distrito, :municipio, :entidad, :firmas_locales, :distrito_local, :firmas_completas, :firmas_actuales
+  active_admin_import validate: true,             
+    before_batch_import: ->(importer) {
+                Seccion.where(id: importer.values_at('id')).delete_all
+            }
   actions :all, except: :destroy
+
 
   config.sort_order = 'no_seccion_asc'
   filter :no_seccion, as: :select
+  filter :distrito_local, as: :select
+  filter :firmas_completas, as: :select, collection: [['Yes', 'true'], ['No', 'false']]
   filter :lne
   filter :firmas_requeridas
 
@@ -26,15 +18,13 @@ ActiveAdmin.register Seccion do
     column :no_seccion 
     column "LNE", :lne
     column :firmas_requeridas
-    column "Firnas actuales" do |s| 
-      Registro.where(seccion: s.no_seccion).where(status: "LISTA NOMINAL (PRELIMINARMENTE)").count
-    end
-    column "Avance (%)" do |s| 
-      ((Registro.where(seccion: s.no_seccion).where(status: "LISTA NOMINAL (PRELIMINARMENTE)").count / s.firmas_requeridas.to_f) * 100).round(2)
-    end
-    column :municipio
+    column :firmas_actuales
+    column :avance
+    column :firmas_completas
+    column :distrito_local
+    column :firmas_locales
     column :entidad
-    column :distrito
+    actions
     
   end
 
