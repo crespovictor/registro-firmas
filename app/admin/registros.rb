@@ -8,7 +8,7 @@ ActiveAdmin.register Registro do
                 csv_headers: ["id","folio_solicitud","nombre","cargo","ambito","auxiliar",
                   "zona_referencia","id_auxiliar","id_dispositivo","folio_registro","fecha_captacion",
                   "fecha_recepcion","status","folio_duplicado","tipo_inconsistencia","entidad","distrito",
-                  "municipio","seccion","distrito_local","motivo_baja","fecha_revision_audiencia","codigo_integridad"]
+                  "municipio","seccion","distrito_local","motivo_baja","fecha_revision_audiencia","confirmado","codigo_integridad"]
             ),
             before_batch_import: ->(importer) {
                 Registro.where(id: importer.values_at('id')).delete_all
