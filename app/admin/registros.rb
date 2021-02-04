@@ -15,10 +15,10 @@ ActiveAdmin.register Registro do
             },
             after_import: -> (importer){
               Seccion.all.each do |s|
-                s.firmas_actuales = Registro.where(seccion: s.no_seccion).where(status: "LISTA NOMINAL (PRELIMINARMENTE)").or(Registro.where(seccion: s.no_seccion).where(status: "PADRON ELECTORAL")).count
-                s.avance = ((Registro.where(seccion: s.no_seccion).where(status: "LISTA NOMINAL (PRELIMINARMENTE)").or(Registro.where(seccion: s.no_seccion).where(status: "PADRON ELECTORAL")).count / s.firmas_requeridas.to_f) * 100).round(2)
-                s.firmas_completas = ((Registro.where(seccion: s.no_seccion).where(status: "LISTA NOMINAL (PRELIMINARMENTE)").or(Registro.where(seccion: s.no_seccion).where(status: "PADRON ELECTORAL")).count / s.firmas_requeridas.to_f) * 100).round(2) >= 100
-                s.save
+                s.firmas_actuales = Registro.where(seccion: s.no_seccion).where.not(status: ["DUPLICADO MISMO ASPIRANTE","FUERA AMBITO GEOGRAFICO"]).count
+                s.avance = ((Registro.where(seccion: s.no_seccion).where.not(status: ["DUPLICADO MISMO ASPIRANTE","FUERA AMBITO GEOGRAFICO"]).count / s.firmas_requeridas.to_f) * 100).round(2)
+                s.firmas_completas = ((Registro.where(seccion: s.no_seccion).where.not(status: ["DUPLICADO MISMO ASPIRANTE","FUERA AMBITO GEOGRAFICO"]).count / s.firmas_requeridas.to_f) * 100).round(2) >= 100
+                s.save!
               end}
 
   actions :all, except: :destroy
